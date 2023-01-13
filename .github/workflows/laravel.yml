@@ -41,7 +41,8 @@ jobs:
 
   steps:
     - name: Deployment
-      uses: appleboy/ssh-action@main
+    - uses: actions/checkout@v2
+    - uses: appleboy/ssh-action@main
       with:
         host: ${{ secrets.SSH_HOST }}
         key: ${{ secrets.SSH_KEY }}
