@@ -45,10 +45,10 @@ jobs:
     - name: Deployment
       uses: appleboy/ssh-action@main
       with:
-]
         host: ${{ secrets.SSH_HOST }}
         key: ${{ secrets.SSH_KEY }}
         username: ${{ secrets.SSH_USERNAME }}
+        port: ${{ secrets.PORT }}
         script: |
           cd /home/devstag/wew/laravel-github-actions
           git checkout -f 
