@@ -40,9 +40,10 @@ jobs:
     runs-on: ubuntu-latest
 
   steps:
+    - name: Checkout
+      uses: actions/checkout@v2
     - name: Deployment
-    - uses: actions/checkout@v2
-    - uses: appleboy/ssh-action@main
+      uses: appleboy/ssh-action@main
       with:
         host: ${{ secrets.SSH_HOST }}
         key: ${{ secrets.SSH_KEY }}
