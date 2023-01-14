@@ -37,7 +37,7 @@ jobs:
       run: vendor/bin/phpunit
             
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-dev-wew
 
     steps:
       - name: Checkout
