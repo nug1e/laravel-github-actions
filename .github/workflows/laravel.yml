@@ -40,16 +40,27 @@ jobs:
     runs-on: self-dev-wew
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
       - name: Deployment
-        uses: appleboy/ssh-action@v0.1.7
+        uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+        env:
+          WELCOME: "ssh scp ssh pipelines"
+          LASTSSH: "Doing something after copying"
         with:
           host: ${{ secrets.SSH_HOST }}
+          user: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          username: ${{ secrets.SSH_USERNAME }}
           port: ${{ secrets.PORT }}
-          script: |
+          connect_timeout: 10s
+          first_ssh: |
+            rm -rf /home/github/test
+            ls -la  \necho $WELCOME 
+            mkdir -p /home/github/test/test1 && 
+            mkdir -p /home/github/test/test2 &&
+          scp: |
+            './test/*' => /home/github/test/
+            ./test/test1* => /home/github/test/test1/
+            ./test/test*.csv => "/home/github/test/test2/"
+          last_ssh: |
             cd /home/devstag/wew/laravel-github-actions
             git checkout -f 
             git pull
