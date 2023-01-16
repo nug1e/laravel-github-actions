@@ -1,25 +1,19 @@
-name: Laravel
-
 on:
   push:
-    branches: [ "devel" ]
-  pull_request:
-    branches: [ "devel" ]
-
-jobs:       
+    branches: [ devel ]
+ 
+jobs:
   deploy:
-    runs-on: self-dev-wew
-
+    runs-on: ubuntu-latest
     steps:
-      - name: Deployment
-        uses: appleboy/ssh-action@master
+      - name: Deploy PHP Laravel
+        uses: appleboy/ssh-action@v0.1.2
         with:
-          host: ${{ secrets.SSH_HOST }}
-          user: ${{ secrets.SSH_USERNAME }}
+          host: ${{secrets.SSH_HOST}}
+          username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.PORT }}
-          connect_timeout: 10s
+          port: ${{ secrets.SSH_PORT }}
+          
           script: |
-            cd /home/devstag/wew/laravel-github-actions
-            git checkout -f 
-            git pull
+            cd /home/devstag/wew/laravel-github-actions # navigate into the folder
+            git pull origin devel # pull the repo
